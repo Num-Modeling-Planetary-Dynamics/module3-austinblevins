@@ -5,18 +5,19 @@ program problem2
    integer, parameter :: O = real64
    real(O) :: rx, ry, rz, vx, vy, vz, t
    real(O) :: a, e, i, omega, varpi, f, rp, ra
-   real(O) :: mmer, mven, mear, mmar, mjup, msat, mura, mnep, mplu
+   real(O) :: mmer, mven, mear, mmar, mjup, msat, mura, mnep, mplu, msun
    integer :: n
 
-   mmer = 0.3302e24_O !kg
-   mven = 4.8685e24_O
-   mear = 5.9736e24_O
-   mmar = 0.64185e24_O
-   mjup = 1898.6e24_O
-   msat = 568.46e24_O
-   mura = 86.832e24_O
-   mnep = 102.43e24_O
-   mplu = 0.0127e24_O
+   msun = 1.98911e30_O !kg
+   mmer = 0.3302e24_O / msun
+   mven = 4.8685e24_O / msun
+   mear = 5.9736e24_O / msun
+   mmar = 0.64185e24_O / msun
+   mjup = 1898.6e24_O / msun
+   msat = 568.46e24_O / msun
+   mura = 86.832e24_O / msun
+   mnep = 102.43e24_O / msun
+   mplu = 0.0127e24_O / msun
 
    !write(*,*) msun, mear
 
@@ -144,19 +145,12 @@ program problem2
       real(O) :: rfactor, vfactor, G, msun, mu, m
       real(O) :: sinf, cosf, sino, coso, sinwf, coswf
 
-      G = 6.672e-11_O
-      msun = 1.98911e30_O !kg
+      G = (6.672e-11_O * 1.98911e30_O * ((60._O*60._O*24._O*365._O)**2)) / ((1.495978707e11_O)**3)
+      msun = 1.0_O
       mu = G*(msun + m)
 
-      rfactor = 1.459787e11_O
-      vfactor = rfactor / (60._O * 60._O * 24._O)
+      vfactor = 365.25_O
 
-      rx = rx * rfactor
-      ry = ry * rfactor
-      rz = rz * rfactor
-      !rx = rx * vfactor
-      !ry = ry * vfactor
-      !rz = rz * vfactor
       vx = vx * vfactor
       vy = vy * vfactor
       vz = vz * vfactor
