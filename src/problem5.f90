@@ -188,7 +188,7 @@ program problem5
 
       E = acos(r/((a*(1-ecc))))
 
-      !check if it's going to or away from periapsis
+      !check if it's going to or away from periapsis <--EXTREMELY SUS!
 
       if(v>0) then
          E = E + pi
@@ -200,7 +200,7 @@ program problem5
          E = solve(E, M, ecc)
       end do
 
-      !f and g functions-- wrong for now (old code needs to be converted)
+      !f and g functions (do I even need this? Could be something different??)
 
       r0 = r
       v0 = v
