@@ -129,6 +129,10 @@ program problem3
       real(O) :: a, e, i, omega, varpi, f
       real(O) :: R, V, h, hx, hy, hz, w, wplusf, Rdot
       real(O) :: rfactor, vfactor, G, msun, mu, n, period, pi
+      real(O) :: aa, ab, ac, ba, bb, bc, ca, cb, cc
+      real(O), dimension(3,3) :: p1p2p3
+      real(O), dimension(3,1) :: pre, post
+
 
       pi = 4.0_O*atan(1.0_O)
 
@@ -152,6 +156,33 @@ program problem3
       vx = rdot*((cos(omega)*(cos(w+f)))-(sin(omega)*(sin(w+f))*cos(i)))
       vy = rdot*((sin(omega)*(cos(w+f)))+(cos(omega)*(sin(w+f))*cos(i)))
       vz = rdot*(sin(w+f)*(sin(i)))
+
+      aa = (cos(w)*(cos(i))) - (sin(w)*cos(i)*sin(omega))
+      ab = (cos(w)*(sin(omega))) - (sin(w)*cos(i)*cos(omega))
+      ac = sin(w)*(sin(i))
+      ba = (-sin(w)*(cos(omega))) - (cos(w)*cos(i)*sin(omega))
+      bb = (cos(w)*(cos(i)*(cos(omega)))) - (sin(w)*(sin(omega)))
+      bc = cos(w)*(sin(i))
+      ca = sin(i)*(sin(omega))
+      cb = -sin(i)*(cos(omega))
+      cc = cos(i)
+
+      pre = reshape(&
+      (/ rx,&
+      ry,&
+      rz/), shape(pre))
+
+      p1p2p3 = transpose(reshape( &
+      (/ aa, ab, ac,&
+      ba, bb, bc,&
+      ca, cb, cc /), shape(p1p2p3))) ! might not be transpose; unsure (See test2.f90)
+
+      post(:,:) = matmul(p1p2p3(:,:), pre(:,:))
+
+      rx = post(1,1)
+      ry = post(2,1)
+      rz = post(3,1)
+   
 
       vfactor = 365.25_O
 
